@@ -7,15 +7,27 @@ class ActionMesurement extends StatefulWidget {
   const ActionMesurement({
     Key? key,
     required this.label,
+    required this.data,
+    required this.options,
   }) : super(key: key);
 
   final String label;
+  final List<dynamic> data;
+  final List<dynamic> options;
 
   @override
   State<ActionMesurement> createState() => _ActionMesurement();
 }
 
 class _ActionMesurement extends State<ActionMesurement> {
+  Map<int, dynamic> options = {};
+
+  @override
+  void initState() {
+    super.initState();
+    options = widget.options.asMap();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -76,58 +88,38 @@ class _ActionMesurement extends State<ActionMesurement> {
           ),
           child: Column(
             children: [
-              Column(children: const [
-                CustomSlider(
-                  icon: Icons.watch_later,
-                  label: "Time spent outside",
-                  max: 5,
-                  min: 0,
-                  division: 5,
-                  interval: 1,
-                  unit: "Hours",
-                ),
-                CustomSlider(
-                  icon: Icons.invert_colors,
-                  label: "Misting system on.",
-                  max: 5,
-                  min: 0,
-                  division: 5,
-                  interval: 1,
-                  unit: "Hours",
-                ),
-                CustomSlider(
-                  icon: Icons.ac_unit,
-                  label: "Air-con system use.",
-                  max: 5,
-                  min: 0,
-                  division: 5,
-                  interval: 1,
-                  unit: "Hours",
-                ),
-                CustomSlider(
-                  icon: Icons.thermostat,
-                  label: "Observed temperature reduction.",
-                  max: 15,
-                  min: 0,
-                  division: 15,
-                  interval: 3,
-                  unit: "Celcius",
-                ),
-                CustomSlider(
-                  icon: Icons.thermostat,
-                  label: "Observed temperature reduction.",
-                  max: 15,
-                  min: 0,
-                  division: 15,
-                  interval: 3,
-                  unit: "Celcius",
-                ),
+              Column(children: [
+                ...options.keys.map((key) {
+                  return CustomSlider(
+                    division: int.parse(options[key]["division"]),
+                    icon: IconData(int.parse(options[key]["iconNumber"]),
+                        fontFamily: 'MaterialIcons'),
+                    interval: int.parse(options[key]["interval"]),
+                    unit: options[key]["unit"],
+                    max: double.parse(options[key]["max"]),
+                    min: double.parse(options[key]["min"]),
+                    label: options[key]["label"],
+                    onChanged: (value) {
+                      setState(() {
+                        widget.data[key] = [options[key]["label"], value];
+                      });
+                    },
+                  );
+                }),
                 CustomEmotionSlider(
                   max: 2,
                   min: 0,
                   value: 1,
                   label: "Slide on your happiness factor.",
-                )
+                  onChanged: (value) {
+                    setState(() {
+                      widget.data[widget.data.length - 1] = [
+                        "Slide on your happiness factor.",
+                        value
+                      ];
+                    });
+                  },
+                ),
               ]),
             ],
           ),

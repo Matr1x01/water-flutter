@@ -120,13 +120,24 @@ class Register extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text("Already have an account?"),
-                      TextButton(onPressed: () {}, child: const Text("Log In"))
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            "Log In",
+                            style: TextStyle(color: lightBlue),
+                          ),
+                        ),
+                      )
                     ],
                   )
                 ]),
               ),
               const Padding(
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(50),
                 child: Image(
                   image: AssetImage("/images/icons/footer.png"),
                 ),

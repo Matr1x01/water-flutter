@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:water_flutter/components/custom_button.dart';
-
 import 'package:water_flutter/constants.dart';
 import 'package:water_flutter/screens/user-pages/components/action_mesurement.dart';
 import 'package:water_flutter/screens/user-pages/components/action_selector.dart';
 import 'package:water_flutter/screens/user-pages/components/reason_selector.dart';
+import 'package:water_flutter/screens/user-pages/survey_end.dart';
+import 'package:water_flutter/services/question_service.dart';
 
 class SurvayPage extends StatefulWidget {
   const SurvayPage({Key? key}) : super(key: key);
@@ -15,53 +16,28 @@ class SurvayPage extends StatefulWidget {
 }
 
 class _SurvayPage extends State<SurvayPage> {
-  var qs = [
-    {
-      "label": "Select Your Options",
-      "options": [
-        {
-          "label": "Misting System",
-          "description": "Sat outside with misting system operating.",
-          "value": "false"
-        },
-        {
-          "label": "Spraying Water",
-          "description":
-              "Sat outside using sprinkler, or periodically spraying water around.",
-          "value": "false"
-        },
-        {
-          "label": "Heatware Event",
-          "description":
-              "Irrigated garden and lawn to prepare for heatwave event.",
-          "value": "false"
-        },
-        {
-          "label": "Green Park",
-          "description": "Attended local green park.",
-          "value": "false"
-        },
-      ]
-    },
-    {
-      "label": "Why were these actions taken?",
-      "options": [
-        {"label": "Wanted to get the family outside.", "value": "false"},
-        {"label": "Entertaining guests.", "value": "false"},
-        {"label": "Wanted to save money.", "value": "false"},
-        {"label": "Make it comfortable for the pets.", "value": "false"},
-        {"label": "Preparing for extreme heat.", "value": "false"}
-      ]
-    }
-  ];
+  final questionService = QuestionService();
 
   @override
   Widget build(BuildContext context) {
+    var qs = questionService.getQuestions();
     Map<String, Object> actionSelector = qs[0];
     Map<String, Object> reasonSelector = qs[1];
+    Map<String, Object> actionMasurement = qs[2];
     DateTime now = DateTime.now();
     String nowDate = DateFormat('yMd').format(now);
     String nowTime = DateFormat('hh:mm').format(DateTime.now());
+    List<String> answers1 = [];
+    TextEditingController otherController1 = TextEditingController();
+    List<String> answers2 = [];
+    TextEditingController otherController2 = TextEditingController();
+    List<dynamic> sliderVals = [
+      ["", 0],
+      ["", 0],
+      ["", 0],
+      ["", 0],
+      ["", 0]
+    ];
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -79,9 +55,14 @@ class _SurvayPage extends State<SurvayPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(
-                    Icons.arrow_back,
-                    color: black,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Icon(
+                      Icons.arrow_back,
+                      color: black,
+                    ),
                   ),
                   Row(
                     children: const [
@@ -112,20 +93,47 @@ class _SurvayPage extends State<SurvayPage> {
               ),
             ),
             ActionSelector(
+              data: answers1,
+              otherController: otherController1,
               label: actionSelector["label"] as String,
               options: actionSelector["options"] as List,
             ),
             ReasonSelector(
+              data: answers2,
+              otherController: otherController2,
               label: reasonSelector["label"] as String,
               options: reasonSelector["options"] as List,
             ),
-            const ActionMesurement(
-              label: "Measurement of activity",
+            ActionMesurement(
+              data: sliderVals,
+              label: actionMasurement["label"] as String,
+              options: actionMasurement["options"] as List,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
               child: CustomButton(
-                onPress: () {},
+                onPress: () {
+                  if (otherController1.text.isNotEmpty) {
+                    answers1.add(otherController1.text);
+                  }
+
+                  if (otherController2.text.isNotEmpty) {
+                    answers2.add(otherController2.text);
+                  }
+                  Map<String, dynamic> answers = {
+                    actionSelector["label"] as String: answers1,
+                    reasonSelector["label"] as String: answers2,
+                    actionMasurement["label"] as String: sliderVals,
+                  };
+                  // ignore: avoid_print
+                  print(answers);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SurveyEnd(),
+                    ),
+                  );
+                },
                 child: const Text(
                   "Submit",
                   style: TextStyle(

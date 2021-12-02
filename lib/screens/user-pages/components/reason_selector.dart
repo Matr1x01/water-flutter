@@ -8,11 +8,15 @@ class ReasonSelector extends StatefulWidget {
     required this.label,
     this.disabled = false,
     this.required = false,
+    required this.data,
+    required this.otherController,
   }) : super(key: key);
 
   final List<dynamic> options;
   final String label;
   final bool required, disabled;
+  final List<String> data;
+  final TextEditingController otherController;
 
   @override
   State<ReasonSelector> createState() => _ReasonSelector();
@@ -22,7 +26,7 @@ class _ReasonSelector extends State<ReasonSelector> {
   //Options is dynamic cuz it holds a [bool,String] data
   Map<String, dynamic> options = {};
   List<String> descriptions = [];
-  TextEditingController otherController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -101,6 +105,9 @@ class _ReasonSelector extends State<ReasonSelector> {
                       onChanged: (bool? value) {
                         setState(() {
                           options[key] = value!;
+                          value
+                              ? widget.data.add(key)
+                              : widget.data.remove(key);
                         });
                       },
                     );
@@ -111,14 +118,15 @@ class _ReasonSelector extends State<ReasonSelector> {
                     Container(
                       padding: const EdgeInsets.all(8),
                       child: TextField(
-                        controller: otherController,
+                        controller: widget.otherController,
                         maxLength: 100,
                         maxLines: null,
                         onChanged: (String value) {
-                          otherController.text = value;
-                          otherController.selection =
+                          widget.otherController.text = value;
+                          widget.otherController.selection =
                               TextSelection.fromPosition(
-                            TextPosition(offset: otherController.text.length),
+                            TextPosition(
+                                offset: widget.otherController.text.length),
                           );
                         },
                         decoration: const InputDecoration(

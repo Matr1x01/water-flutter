@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:water_flutter/components/custom_tile.dart';
 import 'package:water_flutter/constants.dart';
+import 'package:water_flutter/screens/user-pages/survay_page.dart';
+import 'package:water_flutter/screens/user-pages/survey_end.dart';
+import 'package:water_flutter/states/user_state.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({
@@ -8,43 +12,46 @@ class CustomDrawer extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    final loginState = Provider.of<UserState>(context, listen: false);
     return Drawer(
         child: ListView(
       children: [
-        DrawerHeader(
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: stone,
-              ),
-            ),
-            color: white,
-          ),
-          child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+        Container(
+          child: Column(children: [
             const Spacer(),
             CustomListTile(
+              horizontalPadding: 25,
               onTap: () {},
               icon: Icon(
                 Icons.person,
                 color: black.withOpacity(.8),
               ),
               child: Column(
-                children: const [
+                children: [
                   Text(
-                    "User Name",
-                    style: TextStyle(
+                    loginState.getUserid(),
+                    style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: black),
                   ),
                   Text(
-                    "User Id",
-                    style: TextStyle(fontSize: 12, color: stone),
+                    loginState.getUserid(),
+                    style: const TextStyle(fontSize: 12, color: stone),
                   )
                 ],
               ),
-            )
+            ),
           ]),
+          height: size.height * 0.25,
+          decoration: const BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: stone,
+              ),
+            ),
+          ),
         ),
         CustomListTile(
           horizontalPadding: 25,
@@ -62,7 +69,14 @@ class CustomDrawer extends StatelessWidget {
         ),
         CustomListTile(
           horizontalPadding: 25,
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const SurvayPage(),
+              ),
+            );
+          },
           icon: Icon(
             Icons.assessment,
             color: black.withOpacity(.8),
@@ -76,7 +90,14 @@ class CustomDrawer extends StatelessWidget {
         ),
         CustomListTile(
           horizontalPadding: 25,
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const SurveyEnd(),
+              ),
+            );
+          },
           icon: Icon(
             Icons.chrome_reader_mode,
             color: black.withOpacity(.8),
@@ -90,7 +111,10 @@ class CustomDrawer extends StatelessWidget {
         ),
         CustomListTile(
           horizontalPadding: 25,
-          onTap: () {},
+          onTap: () {
+            final loginState = Provider.of<UserState>(context, listen: false);
+            loginState.setLoginState(false);
+          },
           icon: Icon(
             Icons.logout,
             color: black.withOpacity(.8),

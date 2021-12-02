@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:water_flutter/components/custom_button.dart';
 import 'package:water_flutter/components/custom_calender.dart';
 import 'package:water_flutter/components/custom_clock.dart';
 import 'package:water_flutter/constants.dart';
 import 'package:water_flutter/screens/user-pages/components/custom_drawer.dart';
-import 'package:water_flutter/states/login_state.dart';
+import 'package:water_flutter/screens/user-pages/survay_page.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({Key? key}) : super(key: key);
@@ -16,24 +15,13 @@ class UserHome extends StatefulWidget {
 }
 
 class _UserHomeState extends State<UserHome> {
-  final GlobalKey<ScaffoldState> _key = GlobalKey();
-
-  @override
-  void initState() {
-    super.initState();
-    final loginState = Provider.of<LoginState>(context, listen: true);
-    if (!loginState.logedIn) {
-      Navigator.of(context).pushNamed("/login");
-    }
-  }
+  final GlobalKey<ScaffoldState> drawerKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    String nowTime = DateFormat('EEE, MMM yy').format(DateTime.now());
     return Scaffold(
-      drawer: CustomDrawer(
-        key: _key,
-      ),
+      key: drawerKey,
+      drawer: const CustomDrawer(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -54,7 +42,7 @@ class _UserHomeState extends State<UserHome> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: () => _key.currentState!.openDrawer(),
+                    onTap: () => drawerKey.currentState!.openDrawer(),
                     child: const Icon(
                       Icons.menu,
                       color: black,
@@ -160,14 +148,19 @@ class _UserHomeState extends State<UserHome> {
                     ],
                   ),
                 ),
-                CustomCalender(nowTime: nowTime),
+                const CustomCalender(),
                 const CustomClock(),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   alignment: Alignment.center,
                   child: CustomButton(
                     onPress: () {
-                      Navigator.of(context).pushNamed("/survayPage");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SurvayPage(),
+                        ),
+                      );
                     },
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

@@ -2,13 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:water_flutter/screens/auth-pages/login.dart';
-import 'package:water_flutter/screens/auth-pages/register.dart';
-import 'package:water_flutter/screens/user-pages/survay_page.dart';
-import 'package:water_flutter/screens/user-pages/survey_end.dart';
 import 'package:water_flutter/screens/user-pages/user_home.dart';
-// import 'package:water_flutter/states/login_state.dart';
 import 'package:flutter/foundation.dart';
-import 'package:water_flutter/states/login_state.dart';
+import 'package:water_flutter/states/user_state.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,35 +23,56 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarBrightness: Brightness.dark,
     ));
-    return ChangeNotifierProvider<LoginState>(
-      create: (context) => LoginState(),
+    return ChangeNotifierProvider(
+      create: (context) => UserState(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'SydneWater',
         theme: ThemeData(
           fontFamily: "Roboto",
         ),
-        routes: <String, WidgetBuilder>{
-          "/login": (_) => Login(
-                key: key,
-              ),
-          "/register": (_) => Register(
-                key: key,
-              ),
-          "/home": (_) => UserHome(
-                key: key,
-              ),
-          "/survayPage": (_) => SurvayPage(
-                key: key,
-              ),
-          "/survayEnd": (_) => SurveyEnd(
-                key: key,
-              ),
-        },
-        home: UserHome(
+        home: MainPage(
           key: key,
         ),
+        // routes: <String, WidgetBuilder>{
+        //   "/login": (context) => Login(
+        //         key: key,
+        //       ),
+        //   "/register": (context) => Register(
+        //         key: key,
+        //       ),
+        //   "/home": (context) => UserHome(
+        //         key: key,
+        //       ),
+        //   "/survayPage": (context) => SurvayPage(
+        //         key: key,
+        //       ),
+        //   "/survayEnd": (context) => SurveyEnd(
+        //         key: key,
+        //       ),
+        //   "/": (context) => MainPage(
+        //         key: key,
+        //       ),
+        // },
       ),
     );
+  }
+}
+
+class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
+
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  @override
+  Widget build(BuildContext context) {
+    final loginState = Provider.of<UserState>(context, listen: true);
+
+    return loginState.logedIn
+        ? UserHome(key: widget.key)
+        : Login(key: widget.key);
   }
 }

@@ -11,6 +11,7 @@ class CustomSlider extends StatefulWidget {
   final String unit;
   final int interval;
   final IconData icon;
+  final Function(double) onChanged;
   const CustomSlider(
       {Key? key,
       this.value = 0,
@@ -22,27 +23,29 @@ class CustomSlider extends StatefulWidget {
       required this.unit,
       required this.max,
       required this.min,
-      required this.label})
+      required this.label,
+      required this.onChanged})
       : super(key: key);
 
   @override
-  State<CustomSlider> createState() => _CustomSlider();
+  State<CustomSlider> createState() => _CustomSliderState();
 }
 
-class _CustomSlider extends State<CustomSlider> {
+class _CustomSliderState extends State<CustomSlider> {
   double value = 0;
-  String unit = "Hours";
-  String unitShort = "hrs";
-  List<String> markers = [];
-
   @override
   void initState() {
     super.initState();
     value = widget.value;
-    unit = widget.unit;
-    unit == "Hours"
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String unitShort = "hrs";
+    List<String> markers = [];
+    widget.unit == "Hours"
         ? unitShort = "hrs"
-        : unit == "Celcius"
+        : widget.unit == "Celcius"
             ? unitShort = "°C"
             : null;
     for (int i = widget.min.toInt();
@@ -52,10 +55,6 @@ class _CustomSlider extends State<CustomSlider> {
           (unitShort == "°C" ? unitShort : "") +
           (i == widget.max ? "+" : ""));
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -84,13 +83,13 @@ class _CustomSlider extends State<CustomSlider> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  unit,
+                  widget.unit,
                   style: const TextStyle(
                     color: stone,
                   ),
                 ),
                 Text(
-                  value.toString() + unitShort,
+                  widget.value.toString() + unitShort,
                   style: const TextStyle(
                     color: stone,
                   ),
@@ -101,9 +100,8 @@ class _CustomSlider extends State<CustomSlider> {
           Slider(
             value: value,
             onChanged: (newVal) {
-              setState(() {
-                value = newVal;
-              });
+              value = newVal;
+              widget.onChanged(newVal);
             },
             min: widget.min,
             max: widget.max,

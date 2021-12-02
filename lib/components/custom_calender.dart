@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:water_flutter/constants.dart';
 
 class CustomCalender extends StatelessWidget {
   const CustomCalender({
     Key? key,
-    required this.nowTime,
   }) : super(key: key);
-
-  final String nowTime;
 
   @override
   Widget build(BuildContext context) {
+    String nowTime = DateFormat('EEE, MMM yy').format(DateTime.now());
     return Container(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 40),
       margin: const EdgeInsets.symmetric(vertical: 10),

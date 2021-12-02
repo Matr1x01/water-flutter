@@ -11,6 +11,7 @@ class CustomEmotionSlider extends StatefulWidget {
   final double min;
   final double max;
   final String label;
+  final Function(double) onChanged;
   final List<String> markers;
   const CustomEmotionSlider({
     Key? key,
@@ -18,6 +19,7 @@ class CustomEmotionSlider extends StatefulWidget {
     required this.max,
     required this.min,
     required this.label,
+    required this.onChanged,
     this.markers = const ["Sad", "Netural", "Happy"],
   }) : super(key: key);
 
@@ -115,6 +117,7 @@ class _CustomEmotionSlider extends State<CustomEmotionSlider> {
               setState(() {
                 changeEmoji(newVal);
                 value = newVal;
+                widget.onChanged(newVal);
               });
             },
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:water_flutter/components/custom_button.dart';
 import 'package:water_flutter/constants.dart';
+import 'package:water_flutter/screens/user-pages/user_home.dart';
 
 class SurveyEnd extends StatelessWidget {
   const SurveyEnd({Key? key}) : super(key: key);
@@ -13,7 +14,17 @@ class SurveyEnd extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              child: const Icon(Icons.clear),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const UserHome(),
+                    ),
+                  );
+                },
+                child: const Icon(Icons.clear),
+              ),
               height: 50,
               padding: const EdgeInsets.all(20),
               alignment: Alignment.topRight,
@@ -50,6 +61,14 @@ class SurveyEnd extends StatelessWidget {
                 vertical: 30,
               ),
               child: CustomButton(
+                onPress: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const UserHome(),
+                    ),
+                  );
+                },
                 child: const Text(
                   "Back to home",
                   style: TextStyle(
@@ -58,7 +77,6 @@ class SurveyEnd extends StatelessWidget {
                     fontSize: 20,
                   ),
                 ),
-                onPress: () {},
               ),
             ),
             Container(

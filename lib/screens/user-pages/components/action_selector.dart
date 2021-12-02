@@ -7,6 +7,8 @@ class ActionSelector extends StatefulWidget {
     Key? key,
     required this.options,
     required this.label,
+    required this.data,
+    required this.otherController,
     this.disabled = false,
     this.required = false,
   }) : super(key: key);
@@ -14,6 +16,8 @@ class ActionSelector extends StatefulWidget {
   final List<dynamic> options;
   final String label;
   final bool required, disabled;
+  final List<String> data;
+  final TextEditingController otherController;
 
   @override
   State<ActionSelector> createState() => _ActionSelector();
@@ -23,13 +27,13 @@ class _ActionSelector extends State<ActionSelector> {
   //Options is dynamic cuz it holds a [bool,String] data
   Map<String, dynamic> options = {};
   List<String> descriptions = [];
-  TextEditingController otherController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     options = {
-      for (var e in widget.options)
-        e["label"]: [e["value"] == "true", e["description"]]
+      for (var element in widget.options)
+        element["label"]: [element["value"] == "true", element["description"]]
     };
   }
 
@@ -103,6 +107,9 @@ class _ActionSelector extends State<ActionSelector> {
                       onChanged: (bool? value) {
                         setState(() {
                           options[key][0] = value!;
+                          value
+                              ? widget.data.add(key)
+                              : widget.data.remove(key);
                         });
                       },
                     );
@@ -113,14 +120,15 @@ class _ActionSelector extends State<ActionSelector> {
                     Container(
                       padding: const EdgeInsets.all(8),
                       child: TextField(
-                        controller: otherController,
+                        controller: widget.otherController,
                         maxLength: 100,
                         maxLines: null,
                         onChanged: (String value) {
-                          otherController.text = value;
-                          otherController.selection =
+                          widget.otherController.text = value;
+                          widget.otherController.selection =
                               TextSelection.fromPosition(
-                            TextPosition(offset: otherController.text.length),
+                            TextPosition(
+                                offset: widget.otherController.text.length),
                           );
                         },
                         decoration: const InputDecoration(

@@ -4,8 +4,9 @@ import 'package:water_flutter/components/custom_button.dart';
 import 'package:water_flutter/components/custom_password_field.dart';
 import 'package:water_flutter/components/custom_text_field.dart';
 import 'package:water_flutter/constants.dart';
+import 'package:water_flutter/screens/auth-pages/register.dart';
 import 'package:water_flutter/services/auth_service.dart';
-import 'package:water_flutter/states/login_state.dart';
+import 'package:water_flutter/states/user_state.dart';
 
 class Login extends StatelessWidget {
   Login({Key? key}) : super(key: key);
@@ -87,14 +88,15 @@ class Login extends StatelessWidget {
                           if (authServices.userAuth(
                               userId.text, userPass.text)) {
                             final loginState =
-                                Provider.of<LoginState>(context, listen: false);
-                            loginState.logedIn = true;
+                                Provider.of<UserState>(context, listen: false);
+                            loginState.setLoginState(true);
+                            loginState.setUser(userId.text, userPass.text);
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text("Login successfull"),
                               ),
                             );
-                            Navigator.of(context).pop();
+                            // Navigator.of(context).pop();
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text("Login Failed")),
@@ -108,14 +110,29 @@ class Login extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text("Don’t have an account?"),
-                      TextButton(
-                          onPressed: () {}, child: const Text("Register"))
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Register(),
+                            ),
+                          );
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            "Register",
+                            style: TextStyle(color: lightBlue),
+                          ),
+                        ),
+                      )
                     ],
                   )
                 ]),
               ),
               const Padding(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(50),
                 child: Image(
                   image: AssetImage("/images/icons/footer.png"),
                 ),
