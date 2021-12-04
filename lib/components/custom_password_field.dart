@@ -136,7 +136,8 @@ class _CustomPasswordField extends State<CustomPasswordField> {
                 errorStyle: const TextStyle(height: 0, fontSize: 0),
                 border: InputBorder.none,
                 floatingLabelBehavior: FloatingLabelBehavior.auto,
-                contentPadding: const EdgeInsets.all(20),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 prefixIcon: Icon(
                   widget.leadingIcon,
                   color: hasError

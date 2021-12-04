@@ -90,13 +90,16 @@ class Login extends StatelessWidget {
                             final loginState =
                                 Provider.of<UserState>(context, listen: false);
                             loginState.setLoginState(true);
-                            loginState.setUser(userId.text, userPass.text);
+                            loginState.setUser(
+                                int.parse(userId.text),
+                                authServices
+                                    .getUserNameById(int.parse(userId.text)),
+                                userPass.text);
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text("Login successfull"),
                               ),
                             );
-                            // Navigator.of(context).pop();
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text("Login Failed")),
@@ -115,7 +118,7 @@ class Login extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Register(),
+                              builder: (context) => Register(),
                             ),
                           );
                         },

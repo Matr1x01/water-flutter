@@ -17,19 +17,3 @@ const stone = Color(0xffbbbabb);
 const purple = Color(0xff9ea1ff);
 
 const buttonHover = Color(0xff2591AC);
-
-// LightBlue: #2baccc
-// Medium Blue: #3838be
-// Dark Blue: #00005e
-// Marine: #001ecd
-// Orange: #fbc310
-// Forest: #43946
-// Coral: #ff787c
-// GoldFish: #fb9c32
-// Aqua: #00ffff
-// Green: #6cc6b1
-// Stone: #bbbabb
-// Purple: #9ea1ff
-
-// Black: #1e1e1e
-// White: #ffffff

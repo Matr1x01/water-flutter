@@ -1,7 +1,7 @@
 class User {
-  final String uid;
-  final String password;
-  final String name;
+  int uid;
+  String password;
+  String name;
 
   User(this.uid, this.password, this.name);
   String getName() {
@@ -12,7 +12,20 @@ class User {
     return password;
   }
 
-  String getUid() {
+  int getUid() {
     return uid;
+  }
+
+  void setName(String name) {
+    this.name = name;
+  }
+
+  void setPassword(String pass) {
+    // ignore: unnecessary_this
+    this.password = pass;
+  }
+
+  void setUid(int uid) {
+    this.uid = uid;
   }
 }

@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarBrightness: Brightness.dark,
     ));
+    // Provider added to this widget
     return ChangeNotifierProvider(
       create: (context) => UserState(),
       child: MaterialApp(

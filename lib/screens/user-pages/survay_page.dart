@@ -7,6 +7,7 @@ import 'package:water_flutter/screens/user-pages/components/action_selector.dart
 import 'package:water_flutter/screens/user-pages/components/reason_selector.dart';
 import 'package:water_flutter/screens/user-pages/survey_end.dart';
 import 'package:water_flutter/services/question_service.dart';
+import 'package:water_flutter/services/save_text.dart';
 
 class SurvayPage extends StatefulWidget {
   const SurvayPage({Key? key}) : super(key: key);
@@ -126,7 +127,9 @@ class _SurvayPage extends State<SurvayPage> {
                     actionMasurement["label"] as String: sliderVals,
                   };
                   // ignore: avoid_print
-                  print(answers);
+                  // print(answers);
+                  var saveFile = SaveFile();
+                  saveFile.save("survey.txt", answers.toString());
                   Navigator.push(
                     context,
                     MaterialPageRoute(

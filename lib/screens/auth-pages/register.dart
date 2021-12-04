@@ -3,9 +3,11 @@ import 'package:water_flutter/components/custom_button.dart';
 import 'package:water_flutter/components/custom_password_field.dart';
 import 'package:water_flutter/components/custom_text_field.dart';
 import 'package:water_flutter/constants.dart';
+import 'package:water_flutter/services/auth_service.dart';
 
 class Register extends StatelessWidget {
-  const Register({Key? key}) : super(key: key);
+  Register({Key? key}) : super(key: key);
+  final AuthServices authServices = AuthServices();
 
   @override
   Widget build(BuildContext context) {
@@ -97,21 +99,29 @@ class Register extends StatelessWidget {
                         ),
                       ),
                       onPress: () {
-                        // Validate returns true if the form is valid, or false otherwise.
                         if (_formKey.currentState!.validate()) {
-                          // If the form is valid, display a snackbar. In the real world,
-                          // you'd often call a server or save the information in a database.
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                content: Text(userId.text +
-                                    " " +
-                                    userInv.text +
-                                    " " +
-                                    userPass.text +
-                                    " " +
-                                    userConfPass.text +
-                                    " ")),
-                          );
+                          if (authServices
+                              .authInvCode(int.parse(userInv.text))) {
+                            if (userPass == userConfPass) {
+                              authServices.addUser(userId.text, userPass.text);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text("Register Successfull")),
+                              );
+                              Navigator.pop(context);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text(
+                                        "Password and Confirm Password do not match")),
+                              );
+                            }
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text("Invalid Invitation Code")),
+                            );
+                          }
                         }
                       },
                     ),

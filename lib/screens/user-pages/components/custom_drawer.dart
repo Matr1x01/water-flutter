@@ -30,14 +30,14 @@ class CustomDrawer extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    loginState.getUserid(),
+                    loginState.getName(),
                     style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: black),
                   ),
                   Text(
-                    loginState.getUserid(),
+                    loginState.getUserid().toString(),
                     style: const TextStyle(fontSize: 12, color: stone),
                   )
                 ],

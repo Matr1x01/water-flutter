@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
+import 'package:water_flutter/models/user.dart';
 
 class UserState with ChangeNotifier {
   bool logedIn = false;
-  String userId = "";
-  String password = "";
+  User user = User(1, "", "");
 
   bool getLoginState() {
     return logedIn;
@@ -14,16 +14,21 @@ class UserState with ChangeNotifier {
     notifyListeners();
   }
 
-  void setUser(String id, String pass) {
-    userId = id;
-    password = pass;
+  void setUser(int id, String name, String pass) {
+    user.setUid(id);
+    user.setName(name);
+    user.setPassword(pass);
   }
 
-  String getUserid() {
-    return userId;
+  int getUserid() {
+    return user.uid;
+  }
+
+  String getName() {
+    return user.name;
   }
 
   String getPassword() {
-    return password;
+    return user.password;
   }
 }
