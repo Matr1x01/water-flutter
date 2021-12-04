@@ -23,7 +23,7 @@ class CustomButton extends StatelessWidget {
       child: MaterialButton(
         minWidth: minWidth,
         hoverColor: buttonHover,
-        padding: const EdgeInsets.symmetric(vertical: 25),
+        padding: const EdgeInsets.symmetric(vertical: 20),
         onPressed: () {
           onPress();
         },

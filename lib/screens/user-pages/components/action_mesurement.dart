@@ -89,37 +89,93 @@ class _ActionMesurement extends State<ActionMesurement> {
           child: Column(
             children: [
               Column(children: [
-                ...options.keys.map((key) {
-                  return CustomSlider(
-                    division: int.parse(options[key]["division"]),
-                    icon: IconData(int.parse(options[key]["iconNumber"]),
-                        fontFamily: 'MaterialIcons'),
-                    interval: int.parse(options[key]["interval"]),
-                    unit: options[key]["unit"],
-                    max: double.parse(options[key]["max"]),
-                    min: double.parse(options[key]["min"]),
-                    label: options[key]["label"],
-                    onChanged: (value) {
-                      setState(() {
-                        widget.data[key] = [options[key]["label"], value];
-                      });
-                    },
-                  );
-                }),
-                CustomEmotionSlider(
-                  max: 2,
+                // ...options.keys.map((key) {
+                //   return CustomSlider(
+                //     division: int.parse(options[key]["division"]),
+                //     icon: IconData(int.parse(options[key]["iconNumber"]),
+                //         fontFamily: 'MaterialIcons'),
+                //     interval: int.parse(options[key]["interval"]),
+                //     unit: options[key]["unit"],
+                //     max: double.parse(options[key]["max"]),
+                //     min: double.parse(options[key]["min"]),
+                //     label: options[key]["label"],
+                //     onChanged: (value) {
+                //       setState(() {
+                //         widget.data[key] = [options[key]["label"], value];
+                //       });
+                //     },
+                //   );
+                // }),
+                CustomSlider(
+                  icon: Icons.watch_later,
+                  label: "Time spent outside",
+                  max: 5,
                   min: 0,
-                  value: 1,
-                  label: "Slide on your happiness factor.",
+                  division: 5,
+                  interval: 1,
+                  unit: "Hours",
                   onChanged: (value) {
                     setState(() {
-                      widget.data[widget.data.length - 1] = [
-                        "Slide on your happiness factor.",
-                        value
-                      ];
+                      widget.data[0] = [options[0]["label"], value];
                     });
                   },
                 ),
+                CustomSlider(
+                  icon: Icons.invert_colors,
+                  label: "Misting system on.",
+                  max: 5,
+                  min: 0,
+                  division: 5,
+                  interval: 1,
+                  unit: "Hours",
+                  onChanged: (value) {
+                    setState(() {
+                      widget.data[1] = [options[1]["label"], value];
+                    });
+                  },
+                ),
+                CustomSlider(
+                  icon: Icons.ac_unit,
+                  label: "Air-con system use.",
+                  max: 5,
+                  min: 0,
+                  division: 5,
+                  interval: 1,
+                  unit: "Hours",
+                  onChanged: (value) {
+                    setState(() {
+                      widget.data[2] = [options[2]["label"], value];
+                    });
+                  },
+                ),
+                CustomSlider(
+                  icon: Icons.thermostat,
+                  label: "Observed temperature reduction.",
+                  max: 15,
+                  min: 0,
+                  division: 15,
+                  interval: 3,
+                  unit: "Celcius",
+                  onChanged: (value) {
+                    setState(() {
+                      widget.data[3] = [options[3]["label"], value];
+                    });
+                  },
+                ),
+                // CustomEmotionSlider(
+                //   max: 2,
+                //   min: 0,
+                //   value: 1,
+                //   label: "Slide on your happiness factor.",
+                //   onChanged: (value) {
+                //     setState(() {
+                //       widget.data[widget.data.length - 1] = [
+                //         "Slide on your happiness factor.",
+                //         value
+                //       ];
+                //     });
+                //   },
+                // ),
               ]),
             ],
           ),

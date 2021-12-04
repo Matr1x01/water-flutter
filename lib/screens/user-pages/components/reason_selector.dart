@@ -147,7 +147,7 @@ class _ReasonSelector extends State<ReasonSelector> {
                 Container(
                   padding: const EdgeInsets.all(20),
                   child: const Image(
-                    image: AssetImage("/images/assetImages/Image2.png"),
+                    image: AssetImage("assets/images/assetImages/image2.png"),
                   ),
                 ),
               ]),

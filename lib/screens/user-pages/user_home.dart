@@ -21,43 +21,28 @@ class _UserHomeState extends State<UserHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: drawerKey,
+      appBar: AppBar(
+        backgroundColor: white,
+        leading: GestureDetector(
+          onTap: () => drawerKey.currentState!.openDrawer(),
+          child: const Icon(
+            Icons.menu,
+            color: black,
+          ),
+        ),
+        title: const Padding(
+          padding: EdgeInsets.all(8),
+          child: Image(
+            height: 40,
+            width: 254,
+            image: AssetImage("assets/images/icons/logo1.png"),
+          ),
+        ),
+      ),
       drawer: const CustomDrawer(),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: 70,
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: white,
-                boxShadow: [
-                  BoxShadow(
-                    color: stone.withOpacity(.5),
-                    blurRadius: 8,
-                    offset: const Offset(0, 8),
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () => drawerKey.currentState!.openDrawer(),
-                    child: const Icon(
-                      Icons.menu,
-                      color: black,
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    child: const Image(
-                      image: AssetImage("images/icons/logo1.png"),
-                    ),
-                  ),
-                  Container(),
-                ],
-              ),
-            ),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               margin: const EdgeInsets.only(
@@ -98,7 +83,7 @@ class _UserHomeState extends State<UserHome> {
                 Container(
                   padding: const EdgeInsets.all(20),
                   child: const Image(
-                    image: AssetImage("/images/assetImages/image1.png"),
+                    image: AssetImage("assets/images/assetImages/image1.png"),
                   ),
                 ),
               ]),
@@ -243,7 +228,7 @@ class _UserHomeState extends State<UserHome> {
                     child: const Text("help & support"),
                   ),
                   const Image(
-                    image: AssetImage("/images/icons/footer.png"),
+                    image: AssetImage("assets/images/icons/footer.png"),
                   ),
                 ],
               ),

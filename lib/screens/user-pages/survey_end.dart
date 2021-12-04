@@ -10,29 +10,35 @@ class SurveyEnd extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: white,
+        actions: [
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const UserHome(),
+                ),
+              );
+            },
+            child: const Padding(
+              padding: EdgeInsets.all(10),
+              child: Icon(
+                Icons.clear,
+                color: black,
+              ),
+            ),
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const UserHome(),
-                    ),
-                  );
-                },
-                child: const Icon(Icons.clear),
-              ),
-              height: 50,
-              padding: const EdgeInsets.all(20),
-              alignment: Alignment.topRight,
-            ),
-            Container(
               padding: const EdgeInsets.all(20),
               child: const Image(
-                image: AssetImage("/images/assetImages/image3.png"),
+                image: AssetImage("assets/images/assetImages/image3.png"),
               ),
             ),
             const Padding(
@@ -83,13 +89,13 @@ class SurveyEnd extends StatelessWidget {
               padding: const EdgeInsets.only(
                   left: 20, right: 20, top: 40, bottom: 200),
               child: const Image(
-                image: AssetImage("/images/icons/logo.png"),
+                image: AssetImage("assets/images/icons/logo.png"),
               ),
             ),
             const Padding(
               padding: EdgeInsets.all(20),
               child: Image(
-                image: AssetImage("/images/icons/footer.png"),
+                image: AssetImage("assets/images/icons/footer.png"),
               ),
             ),
           ],

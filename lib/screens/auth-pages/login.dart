@@ -11,6 +11,7 @@ import 'package:water_flutter/states/user_state.dart';
 class Login extends StatelessWidget {
   Login({Key? key}) : super(key: key);
   final AuthServices authServices = AuthServices();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class Login extends StatelessWidget {
       padding = size.width * 0.1;
       width = size.width * 0.8;
     }
-    final _formKey = GlobalKey<FormState>();
+
     TextEditingController userId = TextEditingController();
     TextEditingController userPass = TextEditingController();
 
@@ -38,16 +39,13 @@ class Login extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.only(
-                  left: padding,
-                  right: padding,
-                  top: size.height * 0.1,
-                ),
-                child: const Image(
-                  image: AssetImage("images/icons/logo.png"),
-                ),
-              ),
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(
+                    left: padding,
+                    right: padding,
+                    top: size.height * 0.1,
+                  ),
+                  child: Image.asset("assets/images/icons/logo.png")),
               Container(
                 margin: EdgeInsets.only(
                   left: padding,
@@ -137,7 +135,7 @@ class Login extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.all(50),
                 child: Image(
-                  image: AssetImage("/images/icons/footer.png"),
+                  image: AssetImage("assets/images/icons/footer.png"),
                 ),
               ),
             ],

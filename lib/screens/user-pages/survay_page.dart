@@ -40,59 +40,52 @@ class _SurvayPage extends State<SurvayPage> {
       ["", 0]
     ];
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: white,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: const Icon(
+            Icons.arrow_back,
+            color: black,
+          ),
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Icon(
+              Icons.timer,
+              color: black,
+            ),
+            Text(
+              "My Actions",
+              style: TextStyle(fontSize: 20, color: black),
+            )
+          ],
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  nowTime,
+                  style: const TextStyle(fontSize: 12, color: black),
+                ),
+                Text(
+                  nowDate,
+                  style: const TextStyle(fontSize: 12, color: black),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: 70,
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(color: white, boxShadow: [
-                BoxShadow(
-                  color: stone.withOpacity(.5),
-                  blurRadius: 8,
-                  offset: const Offset(0, 8),
-                ),
-              ]),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Icon(
-                      Icons.arrow_back,
-                      color: black,
-                    ),
-                  ),
-                  Row(
-                    children: const [
-                      Icon(Icons.timer),
-                      Text(
-                        "My Actions",
-                        style: TextStyle(fontSize: 20),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        nowTime,
-                        style: const TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                      Text(
-                        nowDate,
-                        style: const TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
             ActionSelector(
               data: answers1,
               otherController: otherController1,

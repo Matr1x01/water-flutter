@@ -149,7 +149,7 @@ class _ActionSelector extends State<ActionSelector> {
                 Container(
                   padding: const EdgeInsets.all(20),
                   child: const Image(
-                    image: AssetImage("/images/assetImages/Image1.png"),
+                    image: AssetImage("assets/images/assetImages/image1.png"),
                   ),
                 ),
               ]),

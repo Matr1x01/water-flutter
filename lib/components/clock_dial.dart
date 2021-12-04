@@ -20,7 +20,7 @@ class _ClockDialState extends State<ClockDial> {
     Size size = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.all(20),
-      margin: const EdgeInsets.symmetric(horizontal: 50),
+      margin: const EdgeInsets.symmetric(horizontal: 40),
       height: size.width * .8,
       width: size.width * .8,
       decoration: BoxDecoration(
@@ -53,7 +53,7 @@ class DrawClock extends CustomPainter {
     var angle = (int.parse(time) * radiansPerHour) - math.pi / 2.0;
     var position =
         center + Offset(math.cos(angle), math.sin(angle)) * (size.width * .5);
-    canvas.drawCircle(position, 20, circlePaint);
+    canvas.drawCircle(position, 15, circlePaint);
     canvas.drawLine(center, position, linePaint);
     canvas.drawCircle(center, 5, circlePaint);
     final clockText = [
@@ -81,8 +81,7 @@ class DrawClock extends CustomPainter {
           text: clockText[i],
           style: TextStyle(
             color: int.parse(time) == int.parse(clockText[i]) ? white : black,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+            fontSize: 18,
           ),
         ),
       );
