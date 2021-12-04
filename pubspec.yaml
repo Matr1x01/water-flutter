@@ -39,6 +39,7 @@ dependencies:
   intl: ^0.17.0-nullsafety.2
   table_calendar: ^3.0.3
   provider: ^6.0.1
+  timer_builder: ^2.0.0
   
 
 dev_dependencies:
@@ -79,6 +80,9 @@ flutter:
     - assets/images/assetImages/image1.png
     - assets/images/assetImages/image2.png
     - assets/images/assetImages/image3.png
+    - assets/images/emojis/happy-face.png
+    - assets/images/emojis/neutral-face.png
+    - assets/images/emojis/sad-face.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

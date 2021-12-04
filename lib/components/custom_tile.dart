@@ -18,8 +18,9 @@ class CustomListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
+    return TextButton(
+      clipBehavior: Clip.none,
+      onPressed: () {
         onTap();
       },
       child: Container(

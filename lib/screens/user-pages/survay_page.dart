@@ -121,8 +121,9 @@ class _SurvayPage extends State<SurvayPage> {
                   };
                   // ignore: avoid_print
                   // print(answers);
-                  var saveFile = SaveFile();
-                  saveFile.save("survey.txt", answers.toString());
+                  // var saveFile = SaveFile();
+                  // saveFile.save("survey.txt", answers.toString());
+                  print(answers.toString());
                   Navigator.push(
                     context,
                     MaterialPageRoute(

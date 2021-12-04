@@ -28,25 +28,37 @@ class CustomEmotionSlider extends StatefulWidget {
 }
 
 class _CustomEmotionSlider extends State<CustomEmotionSlider> {
-  // ignore: prefer_typing_uninitialized_variables
-  var _sad;
-  // ignore: prefer_typing_uninitialized_variables
-  var _netural;
-  // ignore: prefer_typing_uninitialized_variables
-  var _happy;
-  // ignore: prefer_typing_uninitialized_variables
-  var _now;
   double value = 0;
-  final List<String> emojis = [
-    "sad-face",
-    "neutral-face",
-    "happy-face",
-  ];
+
+  bool loading = true;
+  late ui.Image _sad;
+
+  late ui.Image _netural;
+
+  late ui.Image _happy;
+
+  late ui.Image _now;
   @override
   void initState() {
     super.initState();
     value = widget.value;
     _asyncInit();
+  }
+
+  Future<void> _asyncInit() async {
+    setState(() {
+      loading = true;
+    });
+    final sad = await loadUiImage("assets/images/emojis/sad-face.png");
+    final netural = await loadUiImage("assets/images/emojis/neutral-face.png");
+    final happy = await loadUiImage("assets/images/emojis/happy-face.png");
+    _sad = sad;
+    _netural = netural;
+    _happy = happy;
+    loading = false;
+    setState(() {
+      _now = _netural;
+    });
   }
 
   void changeEmoji(double i) {
@@ -71,75 +83,71 @@ class _CustomEmotionSlider extends State<CustomEmotionSlider> {
     return completer.future;
   }
 
-  Future<void> _asyncInit() async {
-    final sad = await loadUiImage("images/emojis/" + emojis[0] + ".png");
-    final netural = await loadUiImage("images/emojis/" + emojis[1] + ".png");
-    final happy = await loadUiImage("images/emojis/" + emojis[2] + ".png");
-    _sad = sad;
-    _netural = netural;
-    _happy = happy;
-    setState(() {
-      _now = _netural;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-      child: Column(children: [
-        Row(children: [
-          const Icon(
-            Icons.emoji_emotions_outlined,
-            color: lightBlue,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-            child: Text(
-              widget.label,
-              style: const TextStyle(
-                fontSize: 20,
-              ),
+    return loading
+        ? const Center(
+            child: CircularProgressIndicator(
+              //Show a Circular Progress indicator
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.cyan),
             ),
-          ),
-        ]),
-        SliderTheme(
-          data: SliderThemeData(
-              thumbShape: SliderThumbImage(image: _now!),
-              activeTrackColor: orange,
-              showValueIndicator: ShowValueIndicator.always),
-          child: Slider(
-            max: widget.max,
-            value: value,
-            min: widget.min,
-            onChanged: (newVal) {
-              setState(() {
-                changeEmoji(newVal);
-                value = newVal;
-                widget.onChanged(newVal);
-              });
-            },
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ...widget.markers.map(
-                (value) => Text(
-                  value,
-                  style: const TextStyle(
-                    color: stone,
+          )
+        : Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            child: Column(children: [
+              Row(children: [
+                const Icon(
+                  Icons.emoji_emotions_outlined,
+                  color: lightBlue,
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                  child: Text(
+                    widget.label,
+                    style: const TextStyle(
+                      fontSize: 20,
+                    ),
                   ),
                 ),
+              ]),
+              SliderTheme(
+                data: SliderThemeData(
+                    thumbShape: SliderThumbImage(image: _now),
+                    activeTrackColor: orange,
+                    showValueIndicator: ShowValueIndicator.always),
+                child: Slider(
+                  max: widget.max,
+                  value: value,
+                  min: widget.min,
+                  onChanged: (newVal) {
+                    setState(() {
+                      changeEmoji(newVal);
+                      value = newVal;
+                      widget.onChanged(newVal);
+                    });
+                  },
+                ),
               ),
-            ],
-          ),
-        )
-      ]),
-    );
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ...widget.markers.map(
+                      (value) => Text(
+                        value,
+                        style: const TextStyle(
+                          color: stone,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ]),
+          );
   }
 }
 
@@ -179,9 +187,6 @@ class SliderThumbImage extends SliderComponentShape {
 
     Paint paint = Paint()..filterQuality = FilterQuality.high;
 
-    // ignore: unnecessary_null_comparison
-    if (image != null) {
-      canvas.drawImage(image, imageOffset, paint);
-    }
+    canvas.drawImage(image, imageOffset, paint);
   }
 }

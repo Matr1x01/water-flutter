@@ -62,9 +62,7 @@ class CustomDrawer extends StatelessWidget {
           ),
           child: const Text(
             "Latest tips & message",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold, color: black),
           ),
         ),
         CustomListTile(
@@ -83,9 +81,7 @@ class CustomDrawer extends StatelessWidget {
           ),
           child: const Text(
             "Fill up observation survey",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold, color: black),
           ),
         ),
         CustomListTile(
@@ -104,9 +100,7 @@ class CustomDrawer extends StatelessWidget {
           ),
           child: const Text(
             "End of trial survey",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold, color: black),
           ),
         ),
         CustomListTile(
@@ -121,9 +115,7 @@ class CustomDrawer extends StatelessWidget {
           ),
           child: const Text(
             "Log Out",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold, color: black),
           ),
         )
       ],

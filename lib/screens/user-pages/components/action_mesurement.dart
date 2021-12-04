@@ -162,20 +162,20 @@ class _ActionMesurement extends State<ActionMesurement> {
                     });
                   },
                 ),
-                // CustomEmotionSlider(
-                //   max: 2,
-                //   min: 0,
-                //   value: 1,
-                //   label: "Slide on your happiness factor.",
-                //   onChanged: (value) {
-                //     setState(() {
-                //       widget.data[widget.data.length - 1] = [
-                //         "Slide on your happiness factor.",
-                //         value
-                //       ];
-                //     });
-                //   },
-                // ),
+                CustomEmotionSlider(
+                  max: 2,
+                  min: 0,
+                  value: 1,
+                  label: "Slide on your happiness factor.",
+                  onChanged: (value) {
+                    setState(() {
+                      widget.data[widget.data.length - 1] = [
+                        "Slide on your happiness factor.",
+                        value
+                      ];
+                    });
+                  },
+                ),
               ]),
             ],
           ),

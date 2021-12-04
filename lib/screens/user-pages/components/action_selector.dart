@@ -123,14 +123,6 @@ class _ActionSelector extends State<ActionSelector> {
                         controller: widget.otherController,
                         maxLength: 100,
                         maxLines: null,
-                        onChanged: (String value) {
-                          widget.otherController.text = value;
-                          widget.otherController.selection =
-                              TextSelection.fromPosition(
-                            TextPosition(
-                                offset: widget.otherController.text.length),
-                          );
-                        },
                         decoration: const InputDecoration(
                           focusColor: lightBlue,
                           hintText: "Other",
@@ -143,7 +135,6 @@ class _ActionSelector extends State<ActionSelector> {
                         ),
                       ),
                     ),
-                    // Text(otherController.text.length.toString() + "/100")
                   ],
                 ),
                 Container(
